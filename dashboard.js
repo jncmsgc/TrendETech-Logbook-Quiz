@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Load Data ---
     function loadData() {
         // Try backend first, fallback to localStorage
-        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwf3j3jp21X_sV_mzgZEd_N5FAK7yXG_s7DQp4dk8OD16mGB2-CpAl3bUROBvvHE2K2/exec';
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwUNkCbjEDQCg-4nNit5hQ6rghUe-omyMIJlrWQM6cqCDfeBLyLMvWneBmILZO7VHFP/exec';
 
         if (BACKEND_URL) {
             fetch(`${BACKEND_URL}?action=leaderboard`)
@@ -183,15 +183,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return result.answers.map(a => {
             const q = QUESTIONS.find(qq => qq.id === a.id);
-            const short = q ? (q.text.length > 60 ? q.text.substring(0, 60) + '...' : q.text) : `Q${a.id}`;
-            return `
-                <div class="mini-result ${a.correct ? 'correct' : 'wrong'}">
-                    <div class="mini-dot"></div>
-                    <span>${short}</span>
+            const short = q ? (q.text.length > 60 ? q.text.substring(0, 60) + '...' : q.text) : \`Q\${a.id}\`;
+            
+            let overrideBtn = '';
+            if (!a.correct) {
+                overrideBtn = \`<button onclick="window.overrideScore('\${result.timestamp}', \${a.id})" style="margin-top:8px; background:var(--accent-green); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">✅ Mark as Correct</button>\`;
+            }
+
+            return \`
+                <div class="mini-result \${a.correct ? 'correct' : 'wrong'}" style="display:flex; flex-direction:column; align-items:flex-start; padding:12px; height:auto;">
+                    <div style="display:flex; align-items:center; margin-bottom:8px;">
+                        <div class="mini-dot"></div>
+                        <span style="font-weight:600;">\${short}</span>
+                    </div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); width:100%;">
+                        <div><strong>They answered:</strong> \${escHtml(a.userAnswer || '')}</div>
+                        \${!a.correct ? \`<div style="color:var(--accent-red); margin-top:4px;"><strong>Correct answer:</strong> \${escHtml(a.correctAnswer || '')}</div>\` : ''}
+                    </div>
+                    \${overrideBtn}
                 </div>
-            `;
+            \`;
         }).join('');
     }
+
+    // Expose override globally
+    window.overrideScore = function(timestamp, questionId) {
+        if (!confirm("Are you sure you want to mark this answer as correct? The score will automatically recalculate.")) return;
+
+        // Optimistic UI Update
+        const result = allResults.find(r => r.timestamp === timestamp);
+        if (result) {
+            const ans = result.answers.find(a => a.id === questionId);
+            if (ans && !ans.correct) {
+                ans.correct = true;
+                result.correct += 1;
+                result.score = Math.round((result.correct / result.total) * 100);
+                result.passed = result.score >= 80; // PASSING_SCORE is 80
+            }
+        }
+        render(); // Re-render immediately
+
+        // Send update to Google Sheets
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwUNkCbjEDQCg-4nNit5hQ6rghUe-omyMIJlrWQM6cqCDfeBLyLMvWneBmILZO7VHFP/exec';
+        if (BACKEND_URL) {
+            fetch(BACKEND_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    action: 'override',
+                    timestamp: timestamp,
+                    id: questionId
+                })
+            });
+        }
+    };
 
     // --- Charts ---
     function renderCharts(data) {

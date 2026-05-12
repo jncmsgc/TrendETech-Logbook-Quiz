@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Backend ---
     function sendResults(data) {
         // Replace with your Google Apps Script Web App URL
-        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwf3j3jp21X_sV_mzgZEd_N5FAK7yXG_s7DQp4dk8OD16mGB2-CpAl3bUROBvvHE2K2/exec';
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwUNkCbjEDQCg-4nNit5hQ6rghUe-omyMIJlrWQM6cqCDfeBLyLMvWneBmILZO7VHFP/exec';
 
         if (!BACKEND_URL) {
             console.log('Quiz results (no backend configured):', data);
