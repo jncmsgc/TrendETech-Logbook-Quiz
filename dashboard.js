@@ -183,26 +183,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return result.answers.map(a => {
             const q = QUESTIONS.find(qq => qq.id === a.id);
-            const short = q ? (q.text.length > 60 ? q.text.substring(0, 60) + '...' : q.text) : \`Q\${a.id}\`;
+            const short = q ? (q.text.length > 60 ? q.text.substring(0, 60) + '...' : q.text) : `Q${a.id}`;
             
             let overrideBtn = '';
             if (!a.correct) {
-                overrideBtn = \`<button onclick="window.overrideScore('\${result.timestamp}', \${a.id})" style="margin-top:8px; background:var(--accent-green); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">✅ Mark as Correct</button>\`;
+                overrideBtn = `<button onclick="window.overrideScore('${result.timestamp}', ${a.id})" style="margin-top:8px; background:var(--accent-green); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">✅ Mark as Correct</button>`;
             }
 
-            return \`
-                <div class="mini-result \${a.correct ? 'correct' : 'wrong'}" style="display:flex; flex-direction:column; align-items:flex-start; padding:12px; height:auto;">
+            return `
+                <div class="mini-result ${a.correct ? 'correct' : 'wrong'}" style="display:flex; flex-direction:column; align-items:flex-start; padding:12px; height:auto;">
                     <div style="display:flex; align-items:center; margin-bottom:8px;">
                         <div class="mini-dot"></div>
-                        <span style="font-weight:600;">\${short}</span>
+                        <span style="font-weight:600;">${short}</span>
                     </div>
                     <div style="font-size:0.8rem; color:var(--text-secondary); width:100%;">
-                        <div><strong>They answered:</strong> \${escHtml(a.userAnswer || '')}</div>
-                        \${!a.correct ? \`<div style="color:var(--accent-red); margin-top:4px;"><strong>Correct answer:</strong> \${escHtml(a.correctAnswer || '')}</div>\` : ''}
+                        <div><strong>They answered:</strong> ${escHtml(a.userAnswer || '')}</div>
+                        ${!a.correct ? `<div style="color:var(--accent-red); margin-top:4px;"><strong>Correct answer:</strong> ${escHtml(a.correctAnswer || '')}</div>` : ''}
                     </div>
-                    \${overrideBtn}
+                    ${overrideBtn}
                 </div>
-            \`;
+            `;
         }).join('');
     }
 
