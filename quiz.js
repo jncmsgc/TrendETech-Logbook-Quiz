@@ -287,9 +287,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (unanswered > 0) {
-            modalUnanswered.textContent = `You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit anyway?`;
+            modalUnanswered.innerHTML = `<span style="color:var(--accent-red); font-weight:bold;">You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}.</span><br>You must answer all questions before submitting.`;
+            btnConfirmSubmit.style.display = 'none';
+            btnCancelSubmit.textContent = 'Go Back to Quiz';
         } else {
             modalUnanswered.textContent = 'All questions answered. Ready to submit?';
+            btnConfirmSubmit.style.display = 'inline-block';
+            btnCancelSubmit.textContent = 'Go Back';
         }
         confirmModal.classList.add('active');
     });
