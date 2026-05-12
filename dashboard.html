@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendETech — Admin Dashboard</title>
+    <meta name="description" content="Logbook Manual Quiz analytics and leaderboard for management.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- HEADER -->
+        <header class="page-header">
+            <div class="logo-mark"></div>
+            <h1>TrendETech Dashboard</h1>
+            <p>Logbook Manual Quiz — Analytics & Results</p>
+        </header>
+
+        <!-- FILTERS -->
+        <div class="filters-bar">
+            <select id="filter-dept" class="filter-select">
+                <option value="all">All Departments</option>
+                <option value="sales">Sales</option>
+                <option value="ops">Operations</option>
+                <option value="tech">Tech</option>
+            </select>
+            <select id="filter-status" class="filter-select">
+                <option value="all">All Results</option>
+                <option value="pass">Passed Only</option>
+                <option value="fail">Failed Only</option>
+            </select>
+            <input type="text" id="search-name" class="search-input" placeholder="🔍 Search by name...">
+            <a href="index.html" class="btn btn-secondary" style="margin-left:auto;">← Back to Quiz</a>
+        </div>
+
+        <!-- KPI CARDS -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon icon-blue">🏆</div>
+                <div class="kpi-value" id="kpi-total">0</div>
+                <div class="kpi-label">Total Attempts</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon icon-green">✅</div>
+                <div class="kpi-value" id="kpi-pass-rate">0%</div>
+                <div class="kpi-label">Pass Rate</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon icon-purple">📊</div>
+                <div class="kpi-value" id="kpi-avg">0%</div>
+                <div class="kpi-label">Average Score</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon icon-red">❌</div>
+                <div class="kpi-value" id="kpi-missed" style="font-size:1rem; line-height:1.4;">—</div>
+                <div class="kpi-label">Most Missed Question</div>
+            </div>
+        </div>
+
+        <!-- CHARTS ROW -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon-wrap icon-red">📉</div>
+                    <h3>Most Missed Questions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="chart-missed"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon-wrap icon-green">🏢</div>
+                    <h3>Pass Rate by Department</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="chart-dept"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEADERBOARD -->
+            <div class="card full-width">
+                <div class="card-header">
+                    <div class="icon-wrap icon-amber">🏆</div>
+                    <h3>Leaderboard</h3>
+                </div>
+                <div class="card-body" style="padding:0; overflow-x:auto;">
+                    <table class="data-table" id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th style="cursor:pointer;" data-sort="name">Name ↕</th>
+                                <th>Department</th>
+                                <th style="cursor:pointer;" data-sort="score">Score ↕</th>
+                                <th>Status</th>
+                                <th style="cursor:pointer;" data-sort="date">Date ↕</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body"></tbody>
+                    </table>
+                    <div id="no-data" class="hidden" style="text-align:center; padding:48px; color:var(--text-secondary);">
+                        <p style="font-size:1.1rem; margin-bottom:8px;">No quiz results yet</p>
+                        <p style="font-size:0.9rem;">Results will appear here once employees take the quiz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
