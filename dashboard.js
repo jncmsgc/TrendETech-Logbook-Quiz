@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ans.correct = true;
                 result.correct += 1;
                 result.score = Math.round((result.correct / result.total) * 100);
-                result.passed = result.score >= 80; // PASSING_SCORE is 80
+                result.passed = result.score >= 75; // PASSING_SCORE is 75
             }
         }
         render(); // Re-render immediately

@@ -2,7 +2,7 @@
 // Each question has: id, type, section, text, depts[], and type-specific fields
 
 const QUIZ_VERSION = "1.0";
-const PASSING_SCORE = 80;
+const PASSING_SCORE = 75;
 
 const QUESTIONS = [
     // ===== SECTION A: MULTIPLE CHOICE =====
@@ -356,7 +356,7 @@ const QUESTIONS = [
             "Return all 10 laptops and create a new ticket themselves for the 4 defective ones",
             "Keep all 10 and create a repair ticket \u2014 don\u2019t return until all are fixed"
         ],
-        answer: 2
+        answer: 1
     },
     {
         id: 41, type: "case", section: "Case / Scenario",
