@@ -663,6 +663,8 @@ body {
     outline: none;
 }
 
+.filter-select option { background: var(--bg-card); color: var(--text-primary); }
+
 .filter-select:focus { border-color: var(--accent-blue); }
 
 .search-input {

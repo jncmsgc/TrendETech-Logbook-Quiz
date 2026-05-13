@@ -146,18 +146,6 @@ const QUESTIONS = [
         answer: 2
     },
     {
-        id: 13, type: "mc", section: "Multiple Choice",
-        text: "How can Sales monitor the status of items sent to the Tech department?",
-        depts: ["sales","tech"],
-        options: [
-            "By directly DMing the Tech team on Discord",
-            "By checking the Logbook Dashboard status page",
-            "Through the Tech Forum Link that Ops provides in the thread",
-            "By verbally asking Operations for a status update"
-        ],
-        answer: 2
-    },
-    {
         id: 14, type: "mc", section: "Multiple Choice",
         text: "Which of the following is PROHIBITED in the logbook system?",
         depts: ["sales","ops","tech"],
@@ -244,12 +232,6 @@ const QUESTIONS = [
         answer: true
     },
     {
-        id: 23, type: "tf", section: "True or False",
-        text: "Any department can message the #logbook-forum regarding specific requests.",
-        depts: ["sales","ops","tech"],
-        answer: true
-    },
-    {
         id: 24, type: "tf", section: "True or False",
         text: "Sales can directly coordinate with Tech for item repairs without going through Operations.",
         depts: ["sales","tech"],
@@ -273,14 +255,14 @@ const QUESTIONS = [
         id: 27, type: "fitb", section: "Fill in the Blanks",
         text: 'For Sales: No _____, no movement.',
         depts: ["sales"],
-        answer: ["photo proof", "photo-proof", "photoproof"],
+        answer: ["photoproof", "proof", "phot proof", "photo proof", "photo-proof"],
         blankCount: 1
     },
     {
         id: 28, type: "fitb", section: "Fill in the Blanks",
         text: 'Operations must _____ the ticket in the Final Step.',
         depts: ["ops"],
-        answer: ["approve"],
+        answer: ["approve", "approved", "confirm", "confirmed"],
         blankCount: 1
     },
     {
@@ -341,25 +323,25 @@ const QUESTIONS = [
         id: 36, type: "id", section: "Identification",
         text: "What is automatically generated when an HTML Form request is submitted?",
         depts: ["sales","ops","tech"],
-        answer: ["logbook-forum thread", "#logbook-forum thread", "a logbook-forum thread", "a #logbook-forum thread", "logbook forum thread", "forum thread"]
+        answer: ["a #logbook-forum thread", "#logbook-forum thread", "discord thread", "logbook forum channel", "logbook forum thread"]
     },
     {
         id: 37, type: "id", section: "Identification",
         text: "What is the mandatory requirement for ALL Sales actions in the logbook system?",
         depts: ["sales","ops"],
-        answer: ["photo proof", "photo-proof", "photoproof", "photo evidence"]
+        answer: ["photoproof", "proof", "phot proof", "to show photoproof", "photo proof", "photo evidence"]
     },
     {
         id: 38, type: "id", section: "Identification",
         text: "On what specific day(s) is Sales permitted to pull items directly from the shelf?",
         depts: ["sales"],
-        answer: ["sunday", "sundays", "sundays only", "sunday only"]
+        answer: ["sundays", "sunday", "sundays only", "sunday only"]
     },
     {
         id: 39, type: "id", section: "Identification",
         text: 'In emergency manual operations, what exact text do you reply to log that items have been moved/transferred?',
         depts: ["sales","ops","tech"],
-        answer: ["--- transferred ---", "---transferred---", "--- TRANSFERRED ---", "---TRANSFERRED---"]
+        answer: ["--- transferred ---", "--- TRANSFERRED ---", "---transferred---", "---TRANSFERRED---"]
     },
 
     // ===== SECTION F: CASE / SCENARIO =====
@@ -382,12 +364,12 @@ const QUESTIONS = [
         text: "What should the Sales rep do?",
         depts: ["sales"],
         options: [
-            "Click Sold in the system \u2192 Upload photo proof \u2192 Wait for auto-approval",
+            "Click Sold in the system \u2192 Upload photo proof \u2192 Operations approves and closes the ticket",
             "Upload photo proof \u2192 Click Sold \u2192 Operations approves and closes the ticket",
             "Notify Operations \u2192 Ops clicks Sold \u2192 Sales uploads photo proof after",
             "Click Sold \u2192 Go to the shelf to restock \u2192 Upload proof to the thread later"
         ],
-        answer: 1
+        answer: 0
     },
     {
         id: 42, type: "case", section: "Case / Scenario",

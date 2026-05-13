@@ -7,13 +7,64 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortDir = 'desc';
     let missedChart = null;
     let deptChart = null;
+    let currentUser = { dept: '', name: '', isAdmin: false };
+
+    // --- Users Data ---
+    const usersByDept = {
+        tech: ['Ian', 'Ravzel', 'Ledj', 'Jimpul'],
+        ops: ['Tracie', 'Richmond', 'Aaron'],
+        sales: ['Lhanica', 'Antoneth', 'Lenard', 'Samantha'],
+        marketing: ['Janice'],
+        management: ['Eldon']
+    };
 
     // --- DOM Refs ---
+    const loginScreen = document.getElementById('login-screen');
+    const dashboardMain = document.getElementById('dashboard-main');
+    const loginDept = document.getElementById('login-dept');
+    const loginName = document.getElementById('login-name');
+    const btnLogin = document.getElementById('btn-login');
+
     const filterDept = document.getElementById('filter-dept');
     const filterStatus = document.getElementById('filter-status');
     const searchName = document.getElementById('search-name');
     const leaderboardBody = document.getElementById('leaderboard-body');
     const noData = document.getElementById('no-data');
+
+    // --- Login Logic ---
+    function checkLoginEnabled() {
+        btnLogin.disabled = !(loginName.value && loginDept.value);
+    }
+
+    loginName.addEventListener('change', checkLoginEnabled);
+    loginDept.addEventListener('change', () => {
+        const selectedDept = loginDept.value;
+        loginName.innerHTML = '<option value="" disabled selected>Select your name</option>';
+        if (selectedDept && usersByDept[selectedDept]) {
+            usersByDept[selectedDept].forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                loginName.appendChild(opt);
+            });
+            loginName.disabled = false;
+        } else {
+            loginName.disabled = true;
+            loginName.innerHTML = '<option value="" disabled selected>Select department first</option>';
+        }
+        checkLoginEnabled();
+    });
+
+    btnLogin.addEventListener('click', () => {
+        currentUser.dept = loginDept.value;
+        currentUser.name = loginName.value;
+        currentUser.isAdmin = (currentUser.dept === 'marketing' && currentUser.name === 'Janice') || 
+                              (currentUser.dept === 'management' && currentUser.name === 'Eldon');
+        
+        loginScreen.classList.add('hidden');
+        dashboardMain.classList.remove('hidden');
+        render(); // render dashboard
+    });
 
     // --- Load Data ---
     function loadData() {
@@ -186,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const short = q ? (q.text.length > 60 ? q.text.substring(0, 60) + '...' : q.text) : `Q${a.id}`;
             
             let overrideBtn = '';
-            if (!a.correct) {
+            if (!a.correct && currentUser.isAdmin) {
                 overrideBtn = `<button onclick="window.overrideScore('${result.timestamp}', ${a.id})" style="margin-top:8px; background:var(--accent-green); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">✅ Mark as Correct</button>`;
             }
 

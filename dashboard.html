@@ -9,7 +9,44 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <div class="dashboard-wrapper">
+    <div id="login-screen" class="welcome-screen">
+        <div class="welcome-card card" style="max-width: 400px; margin: 40px auto;">
+            <div class="card-header">
+                <div class="icon-wrap icon-blue">🔒</div>
+                <h3>Dashboard Access</h3>
+            </div>
+            <div class="card-body">
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">
+                    Please select your department and name to continue.
+                </p>
+                <div class="form-group">
+                    <label for="login-dept">Department</label>
+                    <select id="login-dept" class="form-select">
+                        <option value="" disabled selected>Select department</option>
+                        <option value="sales">Sales</option>
+                        <option value="ops">Operations</option>
+                        <option value="tech">Tech</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="management">Management</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="login-name">Name</label>
+                    <select id="login-name" class="form-select" disabled>
+                        <option value="" disabled selected>Select department first</option>
+                    </select>
+                </div>
+                <button id="btn-login" class="btn btn-primary btn-full" disabled>
+                    Enter Dashboard →
+                </button>
+                <div style="margin-top: 16px; text-align: center;">
+                    <a href="index.html" style="color: var(--text-secondary); font-size: 0.9rem; text-decoration: none;">← Back to Quiz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper hidden" id="dashboard-main">
         <!-- HEADER -->
         <header class="page-header">
             <div class="logo-mark"></div>
